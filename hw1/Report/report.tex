@@ -3,12 +3,12 @@
 \begin{document}
 
 \title{CS4238 Homework 1}
-\author{Laurence Putra Franslay}
+\author{Laurence Putra Franslay (U096833E)}
 \date{8th Oct 2012}
 \maketitle
 
 \section{Task 1}
-Code added for exploit//
+Code added for exploit\\
 \begin{verbatim}
 	long buffer_start = 0xbffff174;
 	long landing = buffer_start + 250;
@@ -19,22 +19,22 @@ Code added for exploit//
 \end{verbatim}
 
 \section{Task 2}
-There is segmentation fault when address space randomization is turned on.//
+There is segmentation fault when address space randomization is turned on.\\
 
-This is due to the fact that the address used by of the start of the stack is now randomized on each run, and no longer the same as previously found.//
+This is due to the fact that the address used by of the start of the stack is now randomized on each run, and no longer the same as previously found.\\
 
 \section{Task 3}
-Error message//
+Error message\\
 \begin{verbatim}
 *** stack smashing detected ***: ./stack terminated
 \end{verbatim}
 
-After the error message there's a backtrace of where the stack buffer overflow started, as well as the memory map of the program at that point in time.//
+After the error message there's a backtrace of where the stack buffer overflow started, as well as the memory map of the program at that point in time.\\
 
-This is as the stack guard prevents the stack from being overwritten.//
+This is as the stack guard prevents the stack from being overwritten.\\
 
 \section{Task 4}
-No. The program crashes with a segmentation fault.//
+No. The program crashes with a segmentation fault.\\
 
-This is as the shell code has been overflowed into the stack, and data in the stack is not allowed to be executed, hence the segfault//
+This is as the shell code has been overflowed into the stack, and data in the stack is not allowed to be executed, hence the segfault\\
 \enddocument
