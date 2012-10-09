@@ -1,0 +1,8 @@
+call_shellcode
+exploit
+stack
+test
+*.log
+*.aux
+*.synctex.gz
+*.pdf
