@@ -35,28 +35,27 @@ public class HTTPSimpleForge {
 			// HttpURLConnection a subclass of URLConnection is returned by
 			// url.openConnection() since the url is an http request.
 			if (urlConn instanceof HttpURLConnection) {
-			HttpURLConnection httpConn = (HttpURLConnection) urlConn;
-			// Contacts the web server and gets the status code from
-			// HTTP Response message.
-			responseCode = httpConn.getResponseCode();
-			System.out.println("Response Code = " + responseCode);
-			// HTTP status code HTTP_OK means the response was
-			// received sucessfully.
-			if (responseCode == HttpURLConnection.HTTP_OK) {
-				// Get the input stream from url connection object.
-				responseIn = urlConn.getInputStream();
-				// Create an instance for BufferedReader
-				// to read the response line by line.
-				BufferedReader buf_inp = new BufferedReader(
-				new InputStreamReader(responseIn));
-				String inputLine;
-				while((inputLine = buf_inp.readLine())!=null) {
-					System.out.println(inputLine);
+				HttpURLConnection httpConn = (HttpURLConnection) urlConn;
+				// Contacts the web server and gets the status code from
+				// HTTP Response message.
+				responseCode = httpConn.getResponseCode();
+				System.out.println("Response Code = " + responseCode);
+				// HTTP status code HTTP_OK means the response was
+				// received sucessfully.
+				if (responseCode == HttpURLConnection.HTTP_OK) {
+					// Get the input stream from url connection object.
+					responseIn = urlConn.getInputStream();
+					// Create an instance for BufferedReader
+					// to read the response line by line.
+					BufferedReader buf_inp = new BufferedReader(new InputStreamReader(responseIn));
+					String inputLine;
+					while((inputLine = buf_inp.readLine())!=null) {
+						System.out.println(inputLine);
+					}
 				}
 			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
 		}
-	} catch (MalformedURLException e) {
-		e.printStackTrace();
 	}
 }
-			}
