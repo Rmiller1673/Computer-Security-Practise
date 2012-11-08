@@ -37,7 +37,7 @@ ip address of gateway				& 	192.168.121.2\\
 \end{tabularx}
 \end{table}
 \subsubsection{Running netwox}
-Tool 33 is used for this, to broadcast an ARP packet that \emph{192.168.121.2} has a hardware address of \emph{00:0C:29:41:88:70}. Tool 33 basically serves to send out an ARP reply packet and since the computer doesn't check if it has previously sent a ARP request, sending a new ARP reply to the target machine will update it's ARP table.\\
+Tool 33 is used for this, to send an ARP packet that \emph{192.168.121.2} has a hardware address of \emph{00:0C:29:41:88:70} to the target machine. Tool 33 basically serves to send out an ARP reply packet and since the computer doesn't check if it has previously sent a ARP request, sending a new ARP reply to the target machine will update it's ARP table.\\
 
 \begin{lstlisting}
 netwox 33 --device "eth2" --eth-src 00:0C:29:41:88:70 --eth-dst 00:0c:29:95:fb:a1 --eth-type 2054 --arp-op 2 --arp-ethsrc 00:0C:29:41:88:70 --arp-ipsrc 192.168.121.2 --arp-ethdst 00:0c:29:95:fb:a1 --arp-ipdst 192.168.121.30
@@ -59,7 +59,7 @@ In TCP, there is generally a 3-way handshake before a connection starts, where t
 In a SYN Flooding Attack, a series of \emph{SYN} packets are sent, and the subsequent \emph{SYN-ACK} packets from the server is ignored. This would result in the server having to dedicate resources to wait for the \emph{ACK} packets from the client.\\
 
 \subsection{Using netwox tool to attack}
-The tool used was tool 76, the SYNFlood tool, and was targeted at port \emph{23} of the target machine, ip address being \emph{192.168.121.130}, which telnet was listening to.\\
+The tool used was tool 76, the SYNFlood tool, and was targeted at port \emph{23} of the target machine, ip address being \emph{192.168.121.130}, which the telnet server was listening to.\\
 
 \begin{lstlisting}
 netwox 76 --dst-ip 192.168.121.130 --dst-port 23
@@ -85,10 +85,10 @@ In essence, TCP reset will instantly stop a TCP connection. \\
 In a TCP RST Attack, the attacking machine will basically forge the TCP packet from the sender, with the \emph{RST} bit set to 1, and send it to the target machine. This would then instantly result in the connection being dropped, and a new connection must be established to transmit data again. \\
 
 \subsection{Using netwox tool to attack}
-Tool 78 is used to launch the TCP RST Attack. Since for this machine, eth2 is the one connected to the network, it is the device used for this attack. \\
+Tool 78 is used to launch the TCP RST Attack. Since for this machine, eth2 is the one connected to the network, it is the device used for this attack, and the target machine is \emph{192.168.121.130}. \\
 
 \begin{lstlisting}
-netwox 78 --device "eth2"
+netwox 78 --device "eth2" --ips "192.168.121.130"
 \end{lstlisting}
 
 \subsection{Result}
@@ -117,7 +117,7 @@ netwox 40 --ip4-offsetfrag 0 --ip4-ttl 64 --ip4-protocol 6 --ip4-src 192.168.121
 \subsubsection{Meaning of command line arguments}
 \begin{table}[here]
 \centering
-\begin{tabularx}{0.7\textwidth}{ | l | X | }
+\begin{tabularx}{\textwidth}{ | l | X | }
 \hline
 Argument			&	Meaning \\
 \hline
@@ -149,9 +149,37 @@ Argument			&	Meaning \\
 \end{table}
 
 \subsection{Screenshots of results in Wireshark}
+\subsubsection{First Packet}
 \includegraphics[width=160mm]{task41.png}
+\subsubsection{Second Packet}
 \includegraphics[width=160mm]{task42.png}
+\subsubsection{Third Packet}
 \includegraphics[width=160mm]{task43.png}
+\subsubsection{Fourth Packet}
 \includegraphics[width=160mm]{task44.png}
 \includegraphics[width=160mm]{task45.png}
+
+\subsection{Abnormal Behavior observed in Wireshark}
+\includegraphics[width=160mm]{task46.png}
+
+There are quite a few TCP Keep-Alive Packets. This is as on the client side there were no ACK's transmitted to the telnet server, and hence it sends the Keep-Alive packets to keep the session alive.\\
+
+\subsection{Eliminating the Abnormal Packets}
+The abnormal packets were removed by ACK-ing the response from the telnet server. The command to do that would be the command below.\\
+
+\begin{lstlisting}
+netwox 40 --ip4-offsetfrag 0 --ip4-ttl 64 --ip4-protocol 6 --ip4-src 192.168.121.129 --ip4-dst 192.168.121.130 --tcp-src 53022 --tcp-dst 23 --tcp-seqnum 1737301456 --tcp-acknum 4197381889 --tcp-ack
+\end{lstlisting}
+
+The command basically acknowledge the previous packet sent by the telnet server, which will lead to the server not sending any more Keep-Alive Packets.\\
+
+\subsection{Investigation}
+\subsubsection{TCP Initial Sequence Numbers}
+The TCP Initial Sequence Numbers are not predictable and random.
+
+\subsubsection{TCP Window Size}
+The TCP Window Size starts off at a large value above 5000, before decreasing to 91, because Telnet does not need that large a window size. 
+
+\subsubsection{Source Port numbers}
+The initial TCP source port number is random and difficult to predict. However, subsequent source ports will generally be 1 or 2 above the previous TCP connection's source port.
 \enddocument
