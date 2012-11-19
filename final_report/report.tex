@@ -11,29 +11,33 @@
 \maketitle
 
 \section{Background before taking the module}
-Prior to this module, I knew a little about web security. Having worked in the field of web development, I knew about exploits such as XSS, and SQL Injection and how to protect websites against such attacks. With my little experience doing C programming as well, I knew how buffer overflow works in theory, but never got around to trying it.
+Prior to this module, I knew a little about web security. Having worked in the field of web development, I knew about exploits such as XSS, and SQL Injection and how to protect websites against such attacks. With my little experience doing C programming as well, I knew how buffer overflow works in theory, but had never gotten around to trying it.
 
 \section{What I learnt from this module}
 \subsection{Mindset}
-When solving problems in the past, I tend to often only learn what was necessary to complete the job. For example, when I first picked up C/C++, I used functions such as strcpy and copied strings into variables without checking for their sizes, thinking that to be a waste of time, on both the development end as well as the processing end. After all, the thinking I had then was, why waste CPU cycles checking it? If the user did input a string that was too large, the system will crash anyway, and since this input was illegal, it's not my problem. \\
+When solving problems in the past, I tended to often only learn what was necessary to complete the job. For example, when I first picked up C/C++, I used functions such as \emph{strcpy} and copied strings into variables without checking for their sizes, thinking that to be a waste of time, on both the development end as well as the processing end. After all, the thinking I had then was, why waste CPU cycles checking it? If the user did input a string that was too large, the system will crash anyway, and since this input was illegal, it's not my problem. \\
 
-After taking this module, I realised that my assumption was very wrong. An attacker would be able to use this unpredefined behaviour to attack the computer, and in some cases, even access root shell. Hence, it is of utmost importance to ensure that all behaviour is defined, and ensure that there are as little unknowns in the execution of the software as possible. \\
+After taking this module, I realised that my assumption was very wrong. An attacker would be able to use this unpredefined behaviour to attack the computer, and, in some cases, even access root shell. Hence, it is of utmost importance to ensure that all behaviour is defined, and ensure that there are as little unknowns in the execution of the software as possible. \\
 
 \subsection{Skills picked up}
 \textbf{Sysadmin skills:} As mentioned earlier, I used to only learn what was necessary to complete the job. Hence, when I ran servers on Azure, I would only open the port required and not learn why I had to do it or if the way I was doing it was the right way. The most important thing to me then was if I could achieve the task I was aiming for, without caring about the circumstances until later. In addition, in the past I would generally use GUI tools to handle the setting of most of the rules. \\
 
-After ths module, I've begun to appreciate how easy it is to use the command line for such matters, and this skills picked up will certainly make doing such sysadmin stuff easier in future. \\
+After this module, I have begun to appreciate how easy it is to use the command line for such matters, and this skills picked up will certainly make doing such sysadmin stuff easier in future. \\
 
 \textbf{Familiarity with Unix tools:} I began to understand how to use the various tools used in class, including \emph{GDB}, \emph{strace}, and \emph{netwox}. \\
 
 \textbf{Deeper understanding of network protocols:} Taking the computer network module concurrently with this module, my understanding of the various network protocols has deepened with the knowledge gained from this module. From understanding the various features in the various protocols, such as TCP, to make the protocol more secure, to how to exploit and disrupt the protocol, this module has remove the veil of invincibility from the various protocols and has led me to begin questioning if the various protocols we use daily have vulnerabilities in them. \\ 
 
-\textbf{Testing the limits:} This module has stirred up curiousity in me about how far I can push the limits, and has trained me to think in ways to push these limits, and make the solution even better. For example, in Homework 2, we were required to do an XSS attack such that when a user visits a post, he will automatically post another post. After doing that, I felt that I could go one step further and do it such that for every subsequent post, it will contain an XSS attack as well. \\
+\textbf{Testing the limits:} This module has piqued my curiosity as to how far I can push the limits, and has trained me to think in ways to push these limits, and make the solution even better. For example, in Homework 2, we were required to do an XSS attack such that when a user visits a post, he will automatically post another post. After doing that, I felt that I could go one step further and do it such that for every subsequent post, it will contain an XSS attack as well. \\
 
 \lstinputlisting[caption="Raw XSS Code", language=Java]{xss.html}
 
 \lstinputlisting[caption="Base62 encoded code"]{xss_base62_encoded.html}
 
-Using the Base62 encoded code ensured that every subsequent post created by the XSS attack was an XSS attack by itself, and Base62 was used as there was a $</script>$, within the code which the browser took as the end of that piece of code. \\
+
+Using the Base62 encoded code in the post ensured that every subsequent post created by the XSS attack was an XSS attack by itself, and Base62 was used as there was a $</script>$ tag (line \emph{53}), within the code which the browser took as the end of that piece of code. \\
+
+\section{Afterthoughts and takeaway}
+This module has given me plenty of insight into computer security, and while I am unlikely to be a computer security professional in the near future, this module has armed me with not only the skills to write secure code, but also the ability to think like a potential attacker, and hopefully make it harder for them to gain control of systems that I write in future.
 
 \enddocument
